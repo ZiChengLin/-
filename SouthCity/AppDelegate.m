@@ -7,6 +7,11 @@
 //
 
 #import "AppDelegate.h"
+#import "NavigationController.h"
+#import "HomeViewController.h"
+#import "MenuViewController.h"
+
+#import "UMSocial.h"
 
 @interface AppDelegate ()
 
@@ -16,7 +21,26 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+    
+    // Create home and menu controllers
+    NavigationController *navigationController = [[NavigationController alloc] initWithRootViewController:[[HomeViewController alloc] init]];
+    MenuViewController *menuController = [[MenuViewController alloc] initWithStyle:UITableViewStylePlain];
+    
+    // Create frosted view controller
+    
+    REFrostedViewController *frostedViewController = [[REFrostedViewController alloc] initWithContentViewController:navigationController menuViewController:menuController];
+    frostedViewController.direction = REFrostedViewControllerDirectionLeft;
+    frostedViewController.liveBlurBackgroundStyle = REFrostedViewControllerLiveBackgroundStyleLight;
+    
+    self.window.rootViewController = frostedViewController;
+    
+    [UMSocialData setAppKey:@"55af076b67e58e24070007cf"];
+    
     return YES;
 }
 
